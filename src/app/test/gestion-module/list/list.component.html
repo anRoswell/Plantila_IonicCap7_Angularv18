@@ -1,0 +1,77 @@
+<ion-header style="box-shadow: 2px 0px 2px rgba(var(--ion-color-medium-rgb));">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Módulo Gestión</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment value="all">
+      <ion-segment-button value="all">
+        <ion-label>TODAS</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        <ion-label>PENDIENTES</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="gestion">
+        <ion-label>GESTION</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list lines="full">
+    @defer (when loading$()) {
+      @if (managements$().length > 0) {
+        @for (management of managements$(); track management) {
+          @if (management.estado === typeStates.ERROR) {
+            <ion-item button="true" detail="false" (click)="goDownload(management.id_record)">
+              <ion-icon [color]="getStateColor(management.estado)" class="ion-padding-end" name="information-circle-outline" size="large"></ion-icon>
+              <ion-label>
+                <strong>Id: {{ management.datos.informacion.id }}</strong><strong> / Nic: {{ management.datos.informacion.nic }}</strong><br />
+                <ion-text>Cliente: {{ management.datos.informacion.cliente }}</ion-text><br />
+                <ion-note color="medium" class="ion-text-wrap">
+                  Dirección: {{ management.datos.informacion.direccion }}<br />
+                  Municipio: {{ management.datos.informacion.municipio }}<br />
+                </ion-note>
+                <ion-badge color="danger">{{ management.mensaje }}</ion-badge>
+              </ion-label>
+              <ion-icon slot="end" name="refresh-circle" size="large" color="secondary"></ion-icon>
+            </ion-item>
+          } @else {
+            <ion-item button="true" detail="true" (click)="goForm(management.id_record)">
+              <ion-icon [color]="getStateColor(management.estado)" class="ion-padding-end" size="large" name="information-circle-outline"></ion-icon>
+              <ion-label>
+                <strong>Id: {{ management.datos.informacion.id }}</strong><strong> / Nic: {{ management.datos.informacion.nic }}</strong><br />
+                <ion-text>Cliente: {{ management.datos.informacion.cliente }}</ion-text><br />
+                <ion-note color="medium" class="ion-text-wrap">
+                  Dirección: {{ management.datos.informacion.direccion }}<br />
+                  Municipio: {{ management.datos.informacion.municipio }}<br />
+                </ion-note>
+                <ion-badge [color]="getStateColor(management.estado)">{{ getStatMessage(management.estado) }}</ion-badge>
+              </ion-label>
+            </ion-item>
+          }
+        }
+      } @else {
+        <app-empty/>
+      }      
+    } @placeholder () {
+      <app-loading/>
+    } @loading () {
+      <app-loading message="Terminando carga..."/>
+    } @error () {
+      <app-error/>
+    }
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title>Total de registros {{ managements$().length }}</ion-title>
+    <ion-buttons slot="end" class="ion-padding-right">
+      <ion-button color="tertiary" (click)="ConvertRecordsToPendigns()">
+        A pendiente
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

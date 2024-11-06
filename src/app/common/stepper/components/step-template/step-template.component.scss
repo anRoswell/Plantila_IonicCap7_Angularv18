@@ -1,0 +1,18 @@
+app-step-template {
+    position: absolute;
+    width: calc(100vw - 50px);
+    height: auto;
+  }
+
+.step-complete-btn {
+    border-radius: 50px;
+    border: none !important;
+    background: #c9e6ff;
+    display: flex;
+    align-items: center;
+}
+
+.completed-step-check {
+    margin-right: 12px;
+    color: var(--ion-color-primary) !important;
+}

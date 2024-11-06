@@ -1,0 +1,22 @@
+<form [formGroup]="form" class="ion-no-padding">
+  <ion-list>
+    <ion-item>
+      <ion-input formControlName="gestion" label="Gestión" labelPlacement="stacked" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="resultado" label="Resultado" labelPlacement="stacked" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="lectura_medidor" label="Lectura medidor" labelPlacement="stacked" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="valor_recaudo" label="Valor recaudo" labelPlacement="stacked" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+     <app-ion-datetime-custom formControlName="fecha_pago" [format]="formatDate" label="Fecha de pago"></app-ion-datetime-custom>
+    </ion-item> <br/>
+    <ion-button [disabled]="!form.valid" shape="round" type="submit" expand="full" color="primary" class="ion-margin" (click)="onSave(form.value)">
+      GUARDAR Y SINCRONIZAR
+    </ion-button>
+  </ion-list>
+</form>

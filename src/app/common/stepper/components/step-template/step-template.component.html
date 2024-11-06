@@ -1,0 +1,13 @@
+
+@if (this.getCurrentStep$() | async; as currentStep) { 
+    @if (step.stepIndex === currentStep.stepIndex) {
+        @if (step.label) {
+            <h2>{{ step.label }}</h2>
+        }
+        @if (step.resume) {
+            <div class="step-content-label">{{ step.resume }}<br></div>
+        }
+        <ng-content></ng-content>
+    }
+}
+

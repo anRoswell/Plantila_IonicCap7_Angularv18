@@ -1,0 +1,43 @@
+<div class="form-steps-container">
+    <ng-container *ngFor="let step of (steps$ | async); let i = index;">
+        <div (click)="onStepClick(step)"
+            [ngClass]="{ 'step-complete': step.isVisited, 'step-incomplete': !step.isVisited, 'step-current': (currentStep$ | async)?.stepIndex === step.stepIndex }"
+            class="step-bubble">{{ step.stepIndex }}</div>
+            @if (steps$ | async; as step) { 
+                @if (i < step.length - 1) { 
+                    <div class="step-divider"></div>
+                }
+            }
+    </ng-container>
+</div>
+<div [@animStep]="currentIndex" class="steps-container">
+    <ng-content></ng-content>
+</div>
+<ion-footer class="ion-slot-bottom">
+    <ion-toolbar color="primary">
+        @if (stepService.isFirstStep() | async; as isFirstStep) { 
+            @if (!isFirstStep) {
+                <ion-buttons slot="start" (click)="onPreviousStep()">
+                    <ion-button>
+                        <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
+                        Anterior
+                    </ion-button>
+                </ion-buttons>
+                <ion-buttons slot="end" (click)="onNextStep()">
+                    <ion-button>
+                        Siguiente
+                        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            }
+            @else {
+                <ion-buttons slot="end" >
+                    <ion-button [disabled]="isDisabledButtonFinish" (click)="onFinish()">
+                        <ion-icon slot="start" name="save-outline"></ion-icon>
+                        {{ labelButtonFinish() }}
+                    </ion-button>
+                </ion-buttons>
+            }
+        }
+    </ion-toolbar>
+</ion-footer>

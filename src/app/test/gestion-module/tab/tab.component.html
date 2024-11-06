@@ -1,0 +1,36 @@
+<ion-header style="box-shadow: 2px 0px 2px rgba(var(--ion-color-medium-rgb));">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" (click)="goList()">
+      <ion-back-button defaultHref="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Orden {{ id }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment value="information" (ionChange)="onSelectTab($event)">
+      <ion-segment-button value="information">
+        <ion-label>INFORMACION</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="management">
+        <ion-label>GESTION</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content fixed>
+
+  @if (selectTab === 'information') {
+    @defer {
+      <app-form-info [information]="information$()"></app-form-info>
+    }
+  }
+  @if (selectTab === 'management') {
+    @defer {
+      <app-form-management [management]="management$()" (save)="onSave($event)"></app-form-management>
+    }
+  }
+</ion-content> 
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title>En gestión</ion-title>
+  </ion-toolbar>
+</ion-footer>
